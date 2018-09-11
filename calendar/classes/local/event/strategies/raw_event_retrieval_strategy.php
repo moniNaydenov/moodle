@@ -254,10 +254,8 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $subquerycourses = $courses;
         }
         // Merge with user courses, if necessary.
-        if (!empty($allusercourses)) {
-            $subquerycourses = array_merge($subquerycourses, $allusercourses);
-            // Make sure we remove duplicate values.
-            $subquerycourses = array_unique($subquerycourses);
+        if (!empty($allusercourses) && empty($subquerycourses)) {
+            $subquerycourses = $allusercourses; // MDL-63286 - replace (don't merge) in order to avoid slow queries.
         }
 
         // Set subquery filter condition for the courses.
