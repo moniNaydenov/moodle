@@ -500,6 +500,9 @@ class core_calendar_external extends external_api {
 
         require_once($CFG->dirroot . '/calendar/lib.php');
 
+        $start = microtime(true);
+        $timecounter = 0;
+
         $user = null;
         $params = self::validate_parameters(
             self::get_calendar_action_events_by_course_parameters(),
@@ -514,12 +517,22 @@ class core_calendar_external extends external_api {
         $context = \context_user::instance($USER->id);
         self::validate_context($context);
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         if (empty($params['aftereventid'])) {
             $params['aftereventid'] = null;
         }
 
         $courses = enrol_get_my_courses('*', null, 0, [$courseid]);
         $courses = array_values($courses);
+
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
 
         if (empty($courses)) {
             return [];
@@ -535,10 +548,33 @@ class core_calendar_external extends external_api {
             $params['limitnum']
         );
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         $exportercache = new events_related_objects_cache($events, $courses);
+
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         $exporter = new events_exporter($events, ['cache' => $exportercache]);
 
-        return $exporter->export($renderer);
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
+        $result = $exporter->export($renderer);
+
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
+        return $result;
     }
 
     /**
