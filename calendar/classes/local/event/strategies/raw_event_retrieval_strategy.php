@@ -214,7 +214,7 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $subquerycourses[] = $courses;
         }
         // Merge with user courses, if necessary.
-        if (!empty($usercourses) && empty($subquerycourses)) {
+        if (!empty($usercourses)) {
             $subquerycourses = array_merge($subquerycourses, $usercourses);
             // Make sure we remove duplicate values.
             $subquerycourses = array_unique($subquerycourses);
@@ -272,7 +272,9 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $params = array_merge($params, $whereparams);
         }
 
+        $DB->set_debug(true);
         $events = $DB->get_records_sql($sql, $params, $offset, $limitnum);
+        $DB->set_debug(false);
 
         return  $events === false ? [] : $events;
     }
