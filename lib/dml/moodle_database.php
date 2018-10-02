@@ -601,7 +601,7 @@ abstract class moodle_database {
                 echo "[" . var_export($params, true) . "]\n";
             }
             echo $separator;
-        } else if (AJAX_SCRIPT) {
+        } else if (AJAX_SCRIPT && false) {
             $separator = "--------------------------------";
             error_log($separator);
             error_log($sql);
