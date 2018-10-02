@@ -574,6 +574,8 @@ class core_calendar_external extends external_api {
         $start = microtime(true);
         $timecounter++;
 
+        die;
+
         return $result;
     }
 
