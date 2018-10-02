@@ -623,6 +623,8 @@ class core_calendar_external extends external_api {
 
         require_once($CFG->dirroot . '/calendar/lib.php');
 
+        $start = microtime(true);
+
         $user = null;
         $params = self::validate_parameters(
             self::get_calendar_action_events_by_courses_parameters(),
@@ -636,6 +638,11 @@ class core_calendar_external extends external_api {
         $context = \context_user::instance($USER->id);
         self::validate_context($context);
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         if (empty($params['courseids'])) {
             return ['groupedbycourse' => []];
         }
@@ -648,6 +655,11 @@ class core_calendar_external extends external_api {
             return ['groupedbycourse' => []];
         }
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         $events = local_api::get_action_events_by_courses(
             $courses,
             $params['timesortfrom'],
@@ -655,14 +667,42 @@ class core_calendar_external extends external_api {
             $params['limitnum']
         );
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         if (empty($events)) {
             return ['groupedbycourse' => []];
         }
 
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         $exportercache = new events_related_objects_cache($events, $courses);
+
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
         $exporter = new events_grouped_by_course_exporter($events, ['cache' => $exportercache]);
 
-        return $exporter->export($renderer);
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
+        $result = $exporter->export($renderer);
+
+        $current = microtime(true);
+        echo $timecounter . ': ' . ($current - $start) . 'sec' . PHP_EOL;
+        $start = microtime(true);
+        $timecounter++;
+
+        return $result;
     }
 
     /**
