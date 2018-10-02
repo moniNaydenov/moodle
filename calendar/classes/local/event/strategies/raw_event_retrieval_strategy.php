@@ -273,6 +273,7 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
         }
 
         echo 'NOW';
+        if (!defined('CLI_SCRIPT')) define('CLI_SCRIPT', true);
         $DB->set_debug(true);
         $events = $DB->get_records_sql($sql, $params, $offset, $limitnum);
         $DB->set_debug(false);
