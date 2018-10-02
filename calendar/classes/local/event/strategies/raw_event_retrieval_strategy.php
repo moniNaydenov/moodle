@@ -214,7 +214,7 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $subquerycourses[] = $courses;
         }
         // Merge with user courses, if necessary.
-        if (!empty($usercourses)) {
+        if (!empty($usercourses) && empty($subquerycourses)) {
             $subquerycourses = array_merge($subquerycourses, $usercourses);
             // Make sure we remove duplicate values.
             $subquerycourses = array_unique($subquerycourses);
