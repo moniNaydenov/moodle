@@ -603,11 +603,13 @@ abstract class moodle_database {
             echo $separator;
         } else if (AJAX_SCRIPT && false) {
             $separator = "--------------------------------";
+            $sqlhash = md5($separator . $sql . var_export($params, true));
             error_log($separator);
             error_log($sql);
             if (!is_null($params)) {
                 error_log("[" . var_export($params, true) . "]");
             }
+            error_log('SQLHASH: ' . $sqlhash);
             error_log($separator);
         } else {
             $separator = "<hr />\n";
