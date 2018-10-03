@@ -595,13 +595,11 @@ abstract class moodle_database {
         }
         if (CLI_SCRIPT) {
             $separator = "--------------------------------\n";
-            $sqlhash = md5($separator . $sql . var_export($params, true));
             echo $separator;
             echo "{$sql}\n";
             if (!is_null($params)) {
                 echo "[" . var_export($params, true) . "]\n";
             }
-            echo 'SQLHASH: ' . $sqlhash;
             echo $separator;
         } else if (AJAX_SCRIPT && false) {
             $separator = "--------------------------------";
@@ -614,11 +612,13 @@ abstract class moodle_database {
             error_log($separator);
         } else {
             $separator = "<hr />\n";
+            $sqlhash = md5($separator . $sql . var_export($params, true));
             echo $separator;
             echo s($sql) . "\n";
             if (!is_null($params)) {
                 echo "[" . s(var_export($params, true)) . "]\n";
             }
+            echo s('SQLHASH: ' . $sqlhash);
             echo $separator;
         }
     }
