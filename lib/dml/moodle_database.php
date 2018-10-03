@@ -595,15 +595,16 @@ abstract class moodle_database {
         }
         if (CLI_SCRIPT) {
             $separator = "--------------------------------\n";
+            $sqlhash = md5($separator . $sql . var_export($params, true));
             echo $separator;
             echo "{$sql}\n";
             if (!is_null($params)) {
                 echo "[" . var_export($params, true) . "]\n";
             }
+            echo 'SQLHASH: ' . $sqlhash;
             echo $separator;
         } else if (AJAX_SCRIPT && false) {
             $separator = "--------------------------------";
-            $sqlhash = md5($separator . $sql . var_export($params, true));
             error_log($separator);
             error_log($sql);
             if (!is_null($params)) {
