@@ -1240,7 +1240,7 @@ class mysqli_native_moodle_database extends moodle_database {
         list($sql, $params, $type) = $this->fix_sql_params($sql, $params);
         $rawsql = $this->emulate_bound_params($sql, $params);
 
-        $this->query_start($sql, $params, SQL_QUERY_SELECT);
+        $this->query_start($rawsql, $params, SQL_QUERY_SELECT);
         $result = $this->mysqli->query($rawsql, MYSQLI_STORE_RESULT);
         $this->query_end($result);
 
