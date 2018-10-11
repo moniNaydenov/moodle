@@ -272,15 +272,15 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $params = array_merge($params, $whereparams);
         }
 
-        echo 'NOW';
+      //  echo 'NOW';
 
-        echo '<pre>';
+        //echo '<pre>';
         //debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-        $DB->set_debug(true);
+       // $DB->set_debug(true);
         $events = $DB->get_records_sql($sql, $params, $offset, $limitnum);
-        $DB->set_debug(false);
+       // $DB->set_debug(false);
 
-        echo '</pre>';
+      //  echo '</pre>';
         return  $events === false ? [] : $events;
     }
 }
