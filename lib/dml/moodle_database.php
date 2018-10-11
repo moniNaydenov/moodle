@@ -619,7 +619,8 @@ abstract class moodle_database {
                 echo "[" . s(var_export($params, true)) . "]\n";
             }
             echo s('SQLHASH: ' . $sqlhash);
-            echo s('FULL query:' . str_replace('?', $params, $sql));
+            $replace = array_fill(0, count($params), '?');
+            echo s('FULL query:' . str_replace($replace, $params, $sql));
             echo $separator;
         }
     }
