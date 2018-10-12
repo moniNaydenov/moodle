@@ -180,8 +180,8 @@ class event_vault implements event_vault_interface {
         ))) {
             foreach ($records as $record) {
                 $totaleventcounter++;
-                /*if ($event = $this->transform_from_database_record($record)) {
-                    $filtertest = $filter ? $filter($event) : true;
+                if ($event = $this->transform_from_database_record($record)) {
+                   /* $filtertest = $filter ? $filter($event) : true;
 
                     if ($event && $filtertest) {
                         $events[] = $event;
@@ -190,8 +190,8 @@ class event_vault implements event_vault_interface {
                     if (count($events) == $limitnum) {
                         // We've got all of the events so break both loops.
                         break 2;
-                    }
-                }*/
+                    }*/
+                }
             }
 
             $offset += $limitnum;
