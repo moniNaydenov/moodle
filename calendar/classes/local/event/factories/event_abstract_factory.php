@@ -126,6 +126,7 @@ abstract class event_abstract_factory implements event_factory_interface {
         }
 
         if ($bail) {
+            echo 'B';
             return null;
         }
 
