@@ -134,7 +134,7 @@ class event_vault implements event_vault_interface {
                 $afterevent ? $afterevent->get_id() : null
             );
         };
-        echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec\n\n</pre>"; $scriptstarttime = microtime(true);
+        echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec</pre>"; $scriptstarttime = microtime(true);
         $timesortfromquery = $fromquery('timesort', $timesortfrom, 'get_sort_time', $timesortafterevent, $withduration);
         $timesorttoquery = $toquery('timesort', $timesortto, 'get_sort_time', $timesortafterevent);
         $timestartfromquery = $fromquery('timestart', $timestartfrom, 'get_start_time', $timestartafterevent, $withduration);
@@ -177,7 +177,7 @@ class event_vault implements event_vault_interface {
             $limitnum,
             $ignorehidden
         ))) {
-            foreach ($records as $record) {
+            /*foreach ($records as $record) {
                 if ($event = $this->transform_from_database_record($record)) {
                     $filtertest = $filter ? $filter($event) : true;
 
@@ -190,7 +190,7 @@ class event_vault implements event_vault_interface {
                         break 2;
                     }
                 }
-            }
+            }*/
 
             $offset += $limitnum;
         }
