@@ -105,6 +105,8 @@ class event_vault implements event_vault_interface {
         if ($limitnum < 1 || $limitnum > 10000) {
             throw new limit_invalid_parameter_exception("Limit must be between 1 and 200 (inclusive)");
         }
+        $scriptstarttime = microtime(true);
+        $scriptcounter = 0;
 
         $fromquery = function($field, $timefrom, $lastseenmethod, $afterevent, $withduration) {
             if (!$timefrom) {
@@ -132,7 +134,7 @@ class event_vault implements event_vault_interface {
                 $afterevent ? $afterevent->get_id() : null
             );
         };
-
+        echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec\n\n</pre>"; $scriptstarttime = microtime(true);
         $timesortfromquery = $fromquery('timesort', $timesortfrom, 'get_sort_time', $timesortafterevent, $withduration);
         $timesorttoquery = $toquery('timesort', $timesortto, 'get_sort_time', $timesortafterevent);
         $timestartfromquery = $fromquery('timestart', $timestartfrom, 'get_start_time', $timestartafterevent, $withduration);
@@ -161,6 +163,8 @@ class event_vault implements event_vault_interface {
         $offset = 0;
         $events = [];
 
+        echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec\n\n</pre>"; $scriptstarttime = microtime(true);
+            
         while ($records = array_values($this->retrievalstrategy->get_raw_events(
             $usersfilter,
             $groupsfilter,
@@ -190,7 +194,7 @@ class event_vault implements event_vault_interface {
 
             $offset += $limitnum;
         }
-
+        echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec\n\n</pre>"; $scriptstarttime = microtime(true);
         return $events;
     }
 
