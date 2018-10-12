@@ -57,6 +57,10 @@ class event_factory extends event_abstract_factory {
             throw new invalid_callback_exception('Event factory visibility callback applier must return true or false');
         }
 
-        return $callbackresult === true ? $event : null;
+        $result = $callbackresult === true;
+        if (!$result) {
+            echo 'C';
+        }
+        return $result ? $event : null;
     }
 }
