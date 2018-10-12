@@ -291,6 +291,7 @@ class container {
 
         // Do not display the event if there is nothing to action.
         if ($event instanceof action_event_interface && $event->get_action()->get_item_count() === 0) {
+            echo 'D';
             return false;
         }
 
@@ -299,6 +300,9 @@ class container {
             return true;
         }
 
+        if (!$eventvisible) {
+            echo 'E';
+        }
         return $eventvisible ? true : false;
     }
 }
