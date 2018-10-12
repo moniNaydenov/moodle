@@ -164,7 +164,8 @@ class event_vault implements event_vault_interface {
         $events = [];
 
         echo '<pre>\n\nTimetillnow: ' . (microtime(true) - $scriptstarttime) . "sec\n\n</pre>"; $scriptstarttime = microtime(true);
-            
+
+        $totaleventcounter = 0;
         while ($records = array_values($this->retrievalstrategy->get_raw_events(
             $usersfilter,
             $groupsfilter,
@@ -177,8 +178,9 @@ class event_vault implements event_vault_interface {
             $limitnum,
             $ignorehidden
         ))) {
-            /*foreach ($records as $record) {
-                if ($event = $this->transform_from_database_record($record)) {
+            foreach ($records as $record) {
+                $totaleventcounter++;
+                /*if ($event = $this->transform_from_database_record($record)) {
                     $filtertest = $filter ? $filter($event) : true;
 
                     if ($event && $filtertest) {
@@ -189,8 +191,8 @@ class event_vault implements event_vault_interface {
                         // We've got all of the events so break both loops.
                         break 2;
                     }
-                }
-            }*/
+                }*/
+            }
 
             $offset += $limitnum;
         }
