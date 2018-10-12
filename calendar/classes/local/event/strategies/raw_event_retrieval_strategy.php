@@ -246,14 +246,34 @@ class raw_event_retrieval_strategy implements raw_event_retrieval_strategy_inter
             $params = array_merge($params, $subqueryparams);
         }
 
+        $subqueries = array();
+
+        $subquerycounter = 1;
+        foreach ($subqueryconditions as $subquerycondition) {
+            $subquerycondition = str_replace('ev.', "ev$subquerycounter.", $subquerycondition);
+            $subqueries[] = "SELECT
+                                ev$subquerycounter.modulename,
+                                ev$subquerycounter.instance,
+                                ev$subquerycounter.eventtype,
+                                ev$subquerycounter.priority
+                            FROM
+                                {event} ev$subquerycounter
+                            WHERE
+                                $subquerycondition";
+            $subquerycounter++;
+        }
+
+        $bigsubquery = implode(' UNION ', $subqueries);
         // Sub-query that fetches the list of unique events that were filtered based on priority.
         $subquery = "SELECT ev.modulename,
                             ev.instance,
                             ev.eventtype,
                             MIN(ev.priority) as priority
-                       FROM {event} ev
-                      $subquerywhere
+                       FROM ($bigsubquery) ev
                    GROUP BY ev.modulename, ev.instance, ev.eventtype";
+
+
+
 
         // Build the main query.
         $sql = "SELECT e.*
