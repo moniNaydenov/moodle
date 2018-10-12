@@ -184,7 +184,7 @@ class event_vault implements event_vault_interface {
                 if ($event = $this->transform_from_database_record($record)) {
                     $filtertest = $filter ? $filter($event) : true;
 
-                    if ($event && $filtertest) {
+                    if ($event && $filtertest || true) {
                         $events[] = $event;
                     }
 
