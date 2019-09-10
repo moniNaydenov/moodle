@@ -145,3 +145,44 @@
         {{/children.count}}
     {{/node.children}}
 </div>
+
+
+<script type="text/javascript">
+{{#js}}
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+
+            var $query = $('#id_query');
+            $($query.parent()).append('<div id="search_live" style="position: absolute; z-index: 999999;" class="bg-warning px-3 py-2">' +
+                    '</div>');
+
+            var $results = $('#search_live');
+            $results.hide();
+            $query.keyup(function(e) {
+                var query = $(this).val().toLowerCase();
+                $results.html('');
+
+                if (query.length >= 2) {
+                    var found = [];
+                    $('.tab-pane ul li a').each(function() {
+                        var $this = $(this);
+                        var content = $this.text().toLowerCase();
+                        if (content.indexOf(query) !== -1) {
+                            if ($.inArray(content, found) === -1) {
+                                found.push(content);
+                                $results.append($this.clone());
+                                $results.append('<div></div>');
+                            }
+                        }
+                    });
+                    if (found.length === 0) {
+                        $results.hide();
+                    } else {
+                        $results.show();
+                    }
+                }
+            });
+        });
+    });
+{{/js}}
+</script>
