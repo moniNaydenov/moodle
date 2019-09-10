@@ -153,8 +153,8 @@
         $(document).ready(function() {
 
             var $query = $('#id_query');
-            $($query.parent()).append('<div id="search_live" style="position: absolute; z-index: 999999;" class="bg-warning px-3 py-2">' +
-                    '</div>');
+            $($query.parent()).append('<ul role="listbox" id="search_live" style="position: absolute; z-index: 999999;" class="bg-white border border-top-0 border-warning pl-4 pr-3 py-2">' +
+                    '</ul>');
 
             var $results = $('#search_live');
             $results.hide();
@@ -162,24 +162,25 @@
                 var query = $(this).val().toLowerCase();
                 $results.html('');
 
+                var found = [];
                 if (query.length >= 2) {
-                    var found = [];
                     $('.tab-pane ul li a').each(function() {
                         var $this = $(this);
                         var content = $this.text().toLowerCase();
                         if (content.indexOf(query) !== -1) {
                             if ($.inArray(content, found) === -1) {
                                 found.push(content);
-                                $results.append($this.clone());
-                                $results.append('<div></div>');
+                                var $item = $('<li role="option"></li>');
+                                $item.append($this.clone());
+                                $results.append($item);
                             }
                         }
                     });
-                    if (found.length === 0) {
-                        $results.hide();
-                    } else {
-                        $results.show();
-                    }
+                }
+                if (found.length === 0) {
+                    $results.hide();
+                } else {
+                    $results.show();
                 }
             });
         });
