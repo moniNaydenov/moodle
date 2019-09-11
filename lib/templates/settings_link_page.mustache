@@ -152,8 +152,17 @@
     require(['jquery'], function($) {
         $(document).ready(function() {
             // Open site administration tab from anchor (hash) in URL
-            var hash = window.location.hash.substr(1);
-            document.querySelectorAll("a[href='#"+hash+"']")[0].click();
+            var hash = window.location.hash.toString();
+            //document.querySelectorAll("a[href='#"+hash+"']")[0].click();
+
+            var $headinglink = $('a[href="' + hash + '"]');
+            if ($headinglink.length > 0) {
+                $('a[href="#linkroot"]').removeClass('active');
+                $('.tab-pane.active#linkroot').removeClass('active');
+                $headinglink.addClass('active');
+                $('.tab-pane' + hash).addClass('active');
+            }
+
 
             const ARROWDOWN = 40;
             const ARROWUP = 38;
@@ -179,7 +188,8 @@
                 } else if (keyCode === ENTER) {
                     if ($current.length > 0) {
                         e.preventDefault();
-                        $current.find('a').click();
+                        window.location = $current.find('a').attr('href');
+                        return;
                     }
                 }
 
@@ -228,6 +238,11 @@
                     } else {
                         $next = $current.prev();
                     }
+                } else if (keyCode === ENTER) {
+                    if ($current.length > 0) {
+                        e.preventDefault();
+                        return;
+                    }
                 }
 
                 if ($next !== null) {
@@ -239,8 +254,9 @@
             $results.keydown(keydown);
 
             var hideResults = function(e) {
-                var $parents = $(e.target).parents('#search_live');
-                if ($parents.length === 0) {
+                var $target = $(e.target);
+                var $parents = $target.parents('#search_live');
+                if ($parents.length === 0 && !$target.is($query)) {
                     $results.hide();
                 }
 
