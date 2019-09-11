@@ -151,6 +151,10 @@
 {{#js}}
     require(['jquery'], function($) {
         $(document).ready(function() {
+            // Open site administration tab from anchor (hash) in URL
+            var hash = window.location.hash.substr(1);
+            document.querySelectorAll("a[href='#"+hash+"']")[0].click();
+
             const ARROWDOWN = 40;
             const ARROWUP = 38;
             const ENTER = 13;
