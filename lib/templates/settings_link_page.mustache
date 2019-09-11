@@ -162,7 +162,19 @@
                 $headinglink.addClass('active');
                 $('.tab-pane' + hash).addClass('active');
             }
-
+            // Add icons to site administration tabs
+            var addIcons = [
+                ['fa-root', 'fa-cog'],
+                ['fa-courses', 'fa-graduation-cap'],
+                ['fa-grades', 'fa-table'],
+                ['fa-modules', 'fa-puzzle-piece'],
+                ['fa-appearance', 'fa-pencil'],
+                ['fa-reports', 'fa-tachometer'],
+                ['fa-development', 'fa-wrench'],
+            ];
+            addIcons.forEach(function(a, i){
+                document.getElementsByClassName(a[0])[0].classList.add(a[1]);
+            });
 
             const ARROWDOWN = 40;
             const ARROWUP = 38;
